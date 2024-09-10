@@ -17,12 +17,32 @@ function App() {
   };
 
   const downloadQRCode = () =>{
-    const canvas = qrCodeRef.current.querySelector('canvas');
-    const url = canvas.toDataURL('image/png');
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'qr-code-geo.png';
-    a.click();
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+
+    const qrCanvas = qrCodeRef.current.querySelector('canvas');
+    const qrCodeSize = qrCanvas.width;
+
+    const framePadding = 40;
+    const frameSize = qrCodeSize + framePadding * 2;
+
+    canvas.width = frameSize;
+    canvas.height = frameSize;
+
+    context.fillStyle = '#ffffff';
+    context.fillRect(0, 0, frameSize, frameSize);
+
+    context.strokeStyle = '#000000';
+    context.lineWidth = 5;
+    context.strokeRect(10, 10, frameSize - 20, frameSize - 20);
+
+    context.drawImage(qrCanvas, framePadding, framePadding, qrCodeSize, qrCodeSize);
+
+    const dataURL = canvas.toDataURL('image/png');
+    const link = document.createElement('a');
+    link.href = dataURL;
+    link.download = 'qr-code-frame.png';
+    link.click();
   }
 
   return (
