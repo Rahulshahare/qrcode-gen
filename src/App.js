@@ -1,6 +1,12 @@
 import React, { useRef, useState } from 'react';
 import { QRCode } from 'react-qrcode-logo';
 import faceBookLogo from './socialMediaLogos/faceBookLogo.svg';
+import instagramLogo from './socialMediaLogos/instagramLogo.svg';
+import linkedInLogo from './socialMediaLogos/linkedInLogo.svg';
+import telegramLogo from './socialMediaLogos/telegramLogo.svg';
+import twitterLogo from './socialMediaLogos/twitterLogo.svg';
+import whatsAppLogo from './socialMediaLogos/whatsAppLogo.svg';
+import youTubeLogo from './socialMediaLogos/youTubeLogo.svg';
 import './index.css'
 
 function App() {
@@ -8,8 +14,10 @@ function App() {
   const [qrStyle, SetqrStyle] = useState("squares"); 
   const [eyeRadius, SeteyeRadius] = useState(0);
   const [qrContent, SetqrContent] = useState('tel:727610182000');
+  const [qrLogoImage, SetqrLogoImage] = useState(null);
  
-
+  
+  
   const frameStyle = {
     padding: '20px',         // Space between QR code and frame
     border: '5px solid #000', // Frame border (customize thickness and color)
@@ -84,7 +92,7 @@ function App() {
             eyeColor='#388E3C'
             qrStyle= {qrStyle}
             quietZone={10}
-            logoImage={faceBookLogo}
+            logoImage={qrLogoImage ? qrLogoImage : undefined}
             logoPaddingStyle='circle'
             logoPadding={0}
             logoHeight={30}
@@ -121,6 +129,17 @@ function App() {
           <button onClick={()=>SeteyeRadius(0)}>Square</button>
           <button onClick={()=>SeteyeRadius(5)}>Rounded</button>
           <button onClick={()=>SeteyeRadius(50)}>Circle</button>
+        </div>
+        <div className='qrLogoImages'>
+          <h3>QR Logo images</h3>
+          <button onClick={()=>SetqrLogoImage()}>None</button>
+          <button onClick={()=>SetqrLogoImage(faceBookLogo)}>Facebook</button>
+          <button onClick={()=>SetqrLogoImage(instagramLogo)}>Instagram</button>
+          <button onClick={()=>SetqrLogoImage(linkedInLogo)}>LinkedIn</button>
+          <button onClick={()=>SetqrLogoImage(telegramLogo)}>Telegram</button>
+          <button onClick={()=>SetqrLogoImage(twitterLogo)}>Twitter</button>
+          <button onClick={()=>SetqrLogoImage(whatsAppLogo)}>Whats App</button>
+          <button onClick={()=>SetqrLogoImage(youTubeLogo)}>Youtube</button>
         </div>
       </div>
     </div>
