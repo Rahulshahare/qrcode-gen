@@ -15,6 +15,7 @@ function App() {
   const [eyeRadius, SeteyeRadius] = useState(0);
   const [qrContent, SetqrContent] = useState('tel:727610182000');
   const [qrLogoImage, SetqrLogoImage] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null); 
  
   
   
@@ -41,7 +42,7 @@ function App() {
     ctx.closePath();
   };
 
-  const downloadQRCode = () =>{
+  const generatePreviewQRCode = () =>{
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
 
@@ -58,22 +59,30 @@ function App() {
     context.fillStyle = '#ffffff';
     drawRoundedRect(context, 0, 0, frameSize, frameSize, borderRadius);
     context.fill();
-    //context.fillRect(0, 0, frameSize, frameSize);
 
     context.strokeStyle = '#000000';
     context.lineWidth = 5;
     drawRoundedRect(context, 10, 10, frameSize - 20, frameSize - 20, borderRadius);
     context.stroke();
-    //context.strokeRect(10, 10, frameSize - 20, frameSize - 20);
 
     context.drawImage(qrCanvas, framePadding, framePadding, qrCodeSize, qrCodeSize);
 
     const dataURL = canvas.toDataURL('image/png');
-    const link = document.createElement('a');
-    link.href = dataURL;
-    link.download = 'qr-code-frame.png';
-    link.click();
+    setPreviewImage(dataURL);
+    // const link = document.createElement('a');
+    // link.href = dataURL;
+    // link.download = 'qr-code-frame.png';
+    // link.click();
     
+  }
+
+  const downloadQRCode = () => {
+    if (previewImage) {
+      const link = document.createElement('a');
+      link.href = previewImage;
+      link.download = 'qr-code-frame.png';
+      link.click();
+    }
   }
 
   return (
@@ -102,6 +111,14 @@ function App() {
         </div> 
         <h3>Download QRCode</h3>
         <button onClick={downloadQRCode}>Download QRCode</button>
+        <button onClick={generatePreviewQRCode}>Generate Preview</button>
+
+        {previewImage && (
+          <div style={{ marginTop: '20px' }}>
+            <h3>Preview:</h3>
+            <img src={previewImage} alt="QR Code Preview" style={{ width: '200px', height: '200px' }} />
+          </div>
+        )}
       </div>
       <div className='setting'>
 
