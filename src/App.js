@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { QRCode } from 'react-qrcode-logo';
 import faceBookLogo from './socialMediaLogos/faceBookLogo.svg';
 import instagramLogo from './socialMediaLogos/instagramLogo.svg';
@@ -15,7 +15,6 @@ function App() {
   const [eyeRadius, SeteyeRadius] = useState(0);
   const [qrContent, SetqrContent] = useState('tel:727610182000');
   const [qrLogoImage, SetqrLogoImage] = useState(null);
-  const [previewImage, setPreviewImage] = useState(null); 
  
   
   
@@ -25,7 +24,7 @@ function App() {
     borderRadius: '15px',     // Rounded corners for the frame
     display: 'inline-block',  // Ensure frame fits tightly around the QR code
     backgroundColor: '#fff',  // Background color of the frame
-    boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', // Optional shadow for depth
+    boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
   };
 
   const drawRoundedRect = (ctx, x, y, width, height, radius) => {
@@ -42,7 +41,7 @@ function App() {
     ctx.closePath();
   };
 
-  const generatePreviewQRCode = () =>{
+  const downloadQRCode = () =>{
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
 
@@ -68,29 +67,63 @@ function App() {
     context.drawImage(qrCanvas, framePadding, framePadding, qrCodeSize, qrCodeSize);
 
     const dataURL = canvas.toDataURL('image/png');
-    setPreviewImage(dataURL);
-    // const link = document.createElement('a');
-    // link.href = dataURL;
-    // link.download = 'qr-code-frame.png';
-    // link.click();
+    const link = document.createElement('a');
+    link.href = dataURL;
+    link.download = 'qr-code-frame.png';
+    link.click();
     
   }
+  const downloadQRCodeWithText = () => {
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+  
+    const qrCanvas = qrCodeRef.current.querySelector('canvas');
+    const qrCodeSize = qrCanvas.width;
+  
+    const framePadding = 40; // Padding for the frame and spacing
+    const canvasWidth = qrCodeSize + framePadding * 2; // Full width
+    const canvasHeight = qrCodeSize + framePadding * 2 + 100; // Extra height for the text
+  
+    // Set the canvas size to rectangular dimensions
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+  
+    // Fill background with black
+    context.fillStyle = '#000000'; // Black background
+    context.fillRect(0, 0, canvasWidth, canvasHeight);
+  
+    // Draw the QR code with white background inside the black frame
+    context.fillStyle = '#ffffff'; // White background for QR code
+    context.fillRect(framePadding, framePadding, qrCodeSize, qrCodeSize);
+    context.drawImage(qrCanvas, framePadding, framePadding, qrCodeSize, qrCodeSize);
+  
+    // Add "SCAN ME" text below the QR code in white and bold
+    context.fillStyle = '#ffffff'; // White text color
+    context.font = 'bold 50px Arial';
+    context.textAlign = 'center';
+    context.fillText('SCAN ME', canvasWidth / 2, canvasHeight - 30); // Positioned below QR code
+  
+    // Create the downloadable image
+    const dataURL = canvas.toDataURL('image/png');
+    const link = document.createElement('a');
+    link.href = dataURL;
+    link.download = 'qr-code-with-text.png';
+    link.click();
+  
+    
+  };
+  
 
-  const downloadQRCode = () => {
-    if (previewImage) {
-      const link = document.createElement('a');
-      link.href = previewImage;
-      link.download = 'qr-code-frame.png';
-      link.click();
-    }
-  }
+  
+  
 
   return (
     <div className="App">
       
       <div className='preview'>
       <h2>QRCode generator</h2>
-        <div ref={qrCodeRef} style={frameStyle}>
+        <div ref={qrCodeRef} style={frameStyle} className='frameStyle'>
+          <h3>SCAN ME</h3>
           <QRCode
             value={qrContent}
             size={200}
@@ -110,15 +143,7 @@ function App() {
           />
         </div> 
         <h3>Download QRCode</h3>
-        <button onClick={downloadQRCode}>Download QRCode</button>
-        <button onClick={generatePreviewQRCode}>Generate Preview</button>
-
-        {previewImage && (
-          <div style={{ marginTop: '20px' }}>
-            <h3>Preview:</h3>
-            <img src={previewImage} alt="QR Code Preview" style={{ width: '200px', height: '200px' }} />
-          </div>
-        )}
+        <button onClick={downloadQRCodeWithText}>Download QRCode</button>
       </div>
       <div className='setting'>
 
@@ -142,7 +167,7 @@ function App() {
           <button onClick={()=>SetqrStyle("fluid")}>Fluid</button>
         </div>
         <div className='qrStyle'>
-          <h3>QR Style</h3>
+          <h3>QR Eye Style</h3>
           <button onClick={()=>SeteyeRadius(0)}>Square</button>
           <button onClick={()=>SeteyeRadius(5)}>Rounded</button>
           <button onClick={()=>SeteyeRadius(50)}>Circle</button>
