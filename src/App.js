@@ -1,5 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { QRCode } from 'react-qrcode-logo';
+import { toPng, toSvg, toJpeg } from 'html-to-image';
+
 import faceBookLogo from './socialMediaLogos/faceBookLogo.svg';
 import instagramLogo from './socialMediaLogos/instagramLogo.svg';
 import linkedInLogo from './socialMediaLogos/linkedInLogo.svg';
@@ -73,48 +75,26 @@ function App() {
     link.click();
     
   }
-  const downloadQRCodeWithText = () => {
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
-  
-    const qrCanvas = qrCodeRef.current.querySelector('canvas');
-    const qrCodeSize = qrCanvas.width;
-  
-    const framePadding = 40; // Padding for the frame and spacing
-    const canvasWidth = qrCodeSize + framePadding * 2; // Full width
-    const canvasHeight = qrCodeSize + framePadding * 2 + 100; // Extra height for the text
-  
-    // Set the canvas size to rectangular dimensions
-    canvas.width = canvasWidth;
-    canvas.height = canvasHeight;
-  
-    // Fill background with black
-    context.fillStyle = '#000000'; // Black background
-    context.fillRect(0, 0, canvasWidth, canvasHeight);
-  
-    // Draw the QR code with white background inside the black frame
-    context.fillStyle = '#ffffff'; // White background for QR code
-    context.fillRect(framePadding, framePadding, qrCodeSize, qrCodeSize);
-    context.drawImage(qrCanvas, framePadding, framePadding, qrCodeSize, qrCodeSize);
-  
-    // Add "SCAN ME" text below the QR code in white and bold
-    context.fillStyle = '#ffffff'; // White text color
-    context.font = 'bold 50px Arial';
-    context.textAlign = 'center';
-    context.fillText('SCAN ME', canvasWidth / 2, canvasHeight - 30); // Positioned below QR code
-  
-    // Create the downloadable image
-    const dataURL = canvas.toDataURL('image/png');
-    const link = document.createElement('a');
-    link.href = dataURL;
-    link.download = 'qr-code-with-text.png';
-    link.click();
-  
-    
-  };
+ 
   
 
-  
+  const downloadQRCodeHtml = (format = 'png') => {
+    const node = qrCodeRef.current;  // Reference to the QR code container
+
+    // Choose the correct export format
+    const exportFunc = format === 'svg' ? toSvg : (format === 'jpeg' ? toJpeg : toPng);
+
+    exportFunc(node, { cacheBust: true })
+      .then((dataUrl) => {
+        const link = document.createElement('a');
+        link.href = dataUrl;
+        link.download = `qr-code.${format}`;
+        link.click();
+      })
+      .catch((err) => {
+        console.error('Something went wrong during the export:', err);
+      });
+  };
   
 
   return (
@@ -143,7 +123,7 @@ function App() {
           />
         </div> 
         <h3>Download QRCode</h3>
-        <button onClick={downloadQRCodeWithText}>Download QRCode</button>
+        <button onClick={()=>downloadQRCodeHtml('png')}>Download QRCode</button>
       </div>
       <div className='setting'>
 
