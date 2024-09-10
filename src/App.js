@@ -1,12 +1,13 @@
 import React, { useRef, useState } from 'react';
 import { QRCode } from 'react-qrcode-logo';
-import logo from './logo.svg'
-
+import faceBookLogo from './socialMediaLogos/faceBookLogo.svg';
 
 function App() {
   const qrCodeRef = useRef(null);
   const [qrStyle, SetqrStyle] = useState("squares"); 
   const [eyeRadius, SeteyeRadius] = useState(0);
+  const [qrContent, SetqrContent] = useState('tel:727610182000');
+ 
 
   const frameStyle = {
     padding: '20px',         // Space between QR code and frame
@@ -71,7 +72,7 @@ function App() {
       <h2>QRCode generator</h2>
         <div ref={qrCodeRef} style={frameStyle}>
           <QRCode
-            value='tel:7276101829'
+            value={qrContent}
             size={200}
             ecLevel='M'
             bgColor='#fff'
@@ -80,13 +81,29 @@ function App() {
             eyeColor='#388E3C'
             qrStyle= {qrStyle}
             quietZone={10}
-            logoImage={logo}
-            logoHeight={40}
-            logoWidth={40}
+            logoImage={faceBookLogo}
+            logoPaddingStyle='circle'
+            logoPadding={0}
+            logoHeight={30}
+            logoWidth={30}
             removeQrCodeBehindLogo={true}
           />
-        </div>
+        </div> 
+        <h3>Download QRCode</h3>
         <button onClick={downloadQRCode}>Download QRCode</button>
+
+        <div className='qrContent'>
+          <h3>QR Content</h3>
+          <button onClick={()=>SetqrContent('https://www.youtube.com/watch?v=i71xHiYijMI')}>Link</button>
+          <button onClick={()=>SetqrContent('tel:8999445733')}>Phone</button>
+          <button onClick={()=>SetqrContent('geo:0,0?q=20.024778,78.563709(Treasure)')}>GPS</button>
+          <button onClick={()=>SetqrContent('WIFI:T:WPA;S:wizkumar;P:000000;H:;;')}>WIFI</button>
+          <button onClick={()=>SetqrContent('SMSTO:7276101829:hello this is qr')}>SMS</button>
+          <button onClick={()=>SetqrContent('mailto:abc@xyz.com?body=its%20good&subject=this%20is%20qr')}>Email</button>
+          <button onClick={()=>SetqrContent("https://wa.me/7276101829?text=I'm%20interested%20in%20your%20car%20for%20sale")}>Whatsaap</button>
+          
+         
+        </div>
 
         <div className='qrStyle'>
           <h3>QR Style</h3>
@@ -100,6 +117,7 @@ function App() {
           <button onClick={()=>SeteyeRadius(5)}>Rounded</button>
           <button onClick={()=>SeteyeRadius(50)}>Circle</button>
         </div>
+        
     </div>
   );
 }
