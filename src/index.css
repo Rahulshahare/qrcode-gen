@@ -24,7 +24,7 @@ code {
 }
 
 button { 
-  color:#050; 
+  color:rgb(30, 27, 27); 
   font: old 84% 'trebuchet ms',helvetica,sans-serif; 
   background-color:#fed; 
   border:1px solid; 
@@ -36,4 +36,29 @@ button {
 button:hover{
   background-color:rgb(181, 90, 0); 
   color: aliceblue;
+}
+
+
+.frameStyleCss h3{
+  color: #fff;
+  font-size: 50px;
+  margin-top: -5px;
+  text-align: center;
+}
+
+.frameStyleCss h3 span{
+  font-size: 30px;
+}
+
+.qrLogoImages img{
+  width: 40px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.qrStyle img{
+  width: 40px;
+  margin: 5px;
+  cursor: pointer;
 }
