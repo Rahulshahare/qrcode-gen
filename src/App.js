@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { QRCode } from 'react-qrcode-logo';
 import faceBookLogo from './socialMediaLogos/faceBookLogo.svg';
+import './index.css'
 
 function App() {
   const qrCodeRef = useRef(null);
@@ -69,6 +70,8 @@ function App() {
 
   return (
     <div className="App">
+      
+      <div className='preview'>
       <h2>QRCode generator</h2>
         <div ref={qrCodeRef} style={frameStyle}>
           <QRCode
@@ -91,6 +94,8 @@ function App() {
         </div> 
         <h3>Download QRCode</h3>
         <button onClick={downloadQRCode}>Download QRCode</button>
+      </div>
+      <div className='setting'>
 
         <div className='qrContent'>
           <h3>QR Content</h3>
@@ -117,7 +122,7 @@ function App() {
           <button onClick={()=>SeteyeRadius(5)}>Rounded</button>
           <button onClick={()=>SeteyeRadius(50)}>Circle</button>
         </div>
-        
+      </div>
     </div>
   );
 }
