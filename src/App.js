@@ -17,6 +17,20 @@ function App() {
     boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', // Optional shadow for depth
   };
 
+  const drawRoundedRect = (ctx, x, y, width, height, radius) => {
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.lineTo(x + width - radius, y);
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+    ctx.lineTo(x + width, y + height - radius);
+    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+    ctx.lineTo(x + radius, y + height);
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+    ctx.lineTo(x, y + radius);
+    ctx.quadraticCurveTo(x, y, x + radius, y);
+    ctx.closePath();
+  };
+
   const downloadQRCode = () =>{
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
@@ -26,16 +40,21 @@ function App() {
 
     const framePadding = 40;
     const frameSize = qrCodeSize + framePadding * 2;
+    const borderRadius = 30; 
 
     canvas.width = frameSize;
     canvas.height = frameSize;
 
     context.fillStyle = '#ffffff';
-    context.fillRect(0, 0, frameSize, frameSize);
+    drawRoundedRect(context, 0, 0, frameSize, frameSize, borderRadius);
+    context.fill();
+    //context.fillRect(0, 0, frameSize, frameSize);
 
     context.strokeStyle = '#000000';
     context.lineWidth = 5;
-    context.strokeRect(10, 10, frameSize - 20, frameSize - 20);
+    drawRoundedRect(context, 10, 10, frameSize - 20, frameSize - 20, borderRadius);
+    context.stroke();
+    //context.strokeRect(10, 10, frameSize - 20, frameSize - 20);
 
     context.drawImage(qrCanvas, framePadding, framePadding, qrCodeSize, qrCodeSize);
 
@@ -52,12 +71,13 @@ function App() {
       <h2>QRCode generator</h2>
         <div ref={qrCodeRef} style={frameStyle}>
           <QRCode
-            value='geo:0,0?q=20.024778,78.563709(QRCodeGenerator)'
+            value='tel:7276101829'
             size={200}
             ecLevel='M'
             bgColor='#fff'
-            fgColor='#000'
+            fgColor='#00796B'
             eyeRadius={eyeRadius}
+            eyeColor='#388E3C'
             qrStyle= {qrStyle}
             quietZone={10}
             logoImage={logo}
