@@ -1,4 +1,4 @@
 # Dynamic QRCode generator
 
-[live app](https://qrg-lksj2cagj-rahulshahares-projects.vercel.app/).
+[live app](https://qrcodegen-rahulshahare.surge.sh/).
 
