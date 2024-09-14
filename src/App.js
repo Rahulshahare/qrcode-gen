@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import { QRCode } from 'react-qrcode-logo';
 import { toPng, toSvg, toJpeg } from 'html-to-image';
 
@@ -57,52 +57,7 @@ function App() {
     SetTitle(title)
   }
 
-  const drawRoundedRect = (ctx, x, y, width, height, radius) => {
-    ctx.beginPath();
-    ctx.moveTo(x + radius, y);
-    ctx.lineTo(x + width - radius, y);
-    ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
-    ctx.lineTo(x + width, y + height - radius);
-    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-    ctx.lineTo(x + radius, y + height);
-    ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
-    ctx.lineTo(x, y + radius);
-    ctx.quadraticCurveTo(x, y, x + radius, y);
-    ctx.closePath();
-  };
-
-  const downloadQRCode = () =>{
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
-
-    const qrCanvas = qrCodeRef.current.querySelector('canvas');
-    const qrCodeSize = qrCanvas.width;
-
-    const framePadding = 40;
-    const frameSize = qrCodeSize + framePadding * 2;
-    const borderRadius = 30; 
-
-    canvas.width = frameSize;
-    canvas.height = frameSize;
-
-    context.fillStyle = '#ffffff';
-    drawRoundedRect(context, 0, 0, frameSize, frameSize, borderRadius);
-    context.fill();
-
-    context.strokeStyle = '#000000';
-    context.lineWidth = 5;
-    drawRoundedRect(context, 10, 10, frameSize - 20, frameSize - 20, borderRadius);
-    context.stroke();
-
-    context.drawImage(qrCanvas, framePadding, framePadding, qrCodeSize, qrCodeSize);
-
-    const dataURL = canvas.toDataURL('image/png');
-    const link = document.createElement('a');
-    link.href = dataURL;
-    link.download = 'qr-code-frame.png';
-    link.click();
-    
-  }
+  
  
   
 
@@ -112,7 +67,14 @@ function App() {
     // Choose the correct export format
     const exportFunc = format === 'svg' ? toSvg : (format === 'jpeg' ? toJpeg : toPng);
 
-    exportFunc(node, { cacheBust: true })
+    exportFunc(node, { 
+      cacheBust: true,
+      // // // backgroundColor: '#09f', 
+      // height:500,
+      // width:500,
+      // canvasHeight:500,
+      // canvasWidth:500,
+    })
       .then((dataUrl) => {
         const link = document.createElement('a');
         link.href = dataUrl;
@@ -130,26 +92,28 @@ function App() {
       
       <div className='preview'>
       <h2>QRCode generator</h2>
-        <div ref={qrCodeRef} style={frameStyle} className='frameStyleCss'>
-          {ScanME && ( <h3>SCAN ME<br/><span>{title}</span></h3>)}
-          <QRCode
-            value={qrContent}
-            size={300}
-            ecLevel='M'
-            bgColor={bgColor}
-            fgColor={fgColor}
-            eyeRadius={eyeRadius}
-            eyeColor={eyeColor}
-            qrStyle= {qrStyle}
-            quietZone={10}
-            logoImage={qrLogoImage ? qrLogoImage : undefined}
-            logoPaddingStyle='circle'
-            logoPadding={0}
-            logoHeight={30}
-            logoWidth={30}
-            removeQrCodeBehindLogo={true}
-          />
-        </div> 
+        <div ref={qrCodeRef}>
+          <div  style={frameStyle} className='frameStyleCss'>
+            {ScanME && ( <h3>SCAN ME<br/><span>{title}</span></h3>)}
+            <QRCode
+              value={qrContent}
+              size={300}
+              ecLevel='M'
+              bgColor={bgColor}
+              fgColor={fgColor}
+              eyeRadius={eyeRadius}
+              eyeColor={eyeColor}
+              qrStyle= {qrStyle}
+              quietZone={10}
+              logoImage={qrLogoImage ? qrLogoImage : undefined}
+              logoPaddingStyle='circle'
+              logoPadding={0}
+              logoHeight={30}
+              logoWidth={30}
+              removeQrCodeBehindLogo={true}
+            />
+          </div> 
+        </div>
         <h3>Download QRCode</h3>
         <button onClick={()=>downloadQRCodeHtml('png')}>Download QRCode as PNG</button>
         <button onClick={()=>downloadQRCodeHtml('svg')}>Download QRCode as SVG</button>
@@ -183,7 +147,7 @@ function App() {
         </div>
         <div className='qrLogoImages'>
           <h3>QR Logo images</h3>
-          <img src={noImage} onClick={()=>SetqrLogoImage()} title='None'/>
+          <img src={noImage} onClick={()=>SetqrLogoImage()} title='None' alt='default'/>
           <img src={faceBookLogo} onClick={()=>SetqrLogoImage(faceBookLogo)} title='Facebook' alt='fb'/>
           <img src={instagramLogo} onClick={()=>SetqrLogoImage(instagramLogo)} title='Instagram' alt='insta'/>
           <img src={linkedInLogo} onClick={()=>SetqrLogoImage(linkedInLogo)} title='LinkedIn' alt='linkedIn'/>
@@ -194,10 +158,10 @@ function App() {
         </div>
         <div className='themes'>
           <h3>Pre-made templates</h3>
-          <img src={scanMe} onClick={()=>themeChanger("#ffffff","#00796B","#388E3C", true)}/>
-          <img src={defaultImg} onClick={()=>themeChanger("#ffffff","#000000","#000000", false)}/>
-          <img src={brown} onClick={()=>themeChanger("#000","#FFA000","#FFCD4E", false)}/>
-          <img src={bluegreen} onClick={()=>themeChanger("#ffffff","#00796B","#388E3C", false)}/>
+          <img src={scanMe} onClick={()=>themeChanger("#ffffff","#00796B","#388E3C", true)} alt='scanMeButton'/>
+          <img src={defaultImg} onClick={()=>themeChanger("#ffffff","#000000","#000000", false)} alt='defaultImage'/>
+          <img src={brown} onClick={()=>themeChanger("#000","#FFA000","#FFCD4E", false)} alt='brown'/>
+          <img src={bluegreen} onClick={()=>themeChanger("#ffffff","#00796B","#388E3C", false)} alt='bluegreen'/>
         </div>
       </div>
     </div>
