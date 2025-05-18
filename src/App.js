@@ -28,6 +28,7 @@ function App() {
   const [qrContent, SetqrContent] = useState('tel:727610182000');
   const [qrLogoImage, SetqrLogoImage] = useState(null);
   const [title, SetTitle] = useState('TO CONTACT');
+  const [placeholder, SetPlaceholder] = useState(null)
 
   const [bgColor, SetBgColor] = useState("#ffffff");
   const [fgColor, SetFgColor] = useState("#000000");
@@ -40,7 +41,8 @@ function App() {
     SetEyeColor(eyeC);
     SetScanME(sc);
   }
- 
+
+  
   
   
   const frameStyle = {
@@ -52,9 +54,10 @@ function App() {
     boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
   };
 
-  const SetData = (data, title) =>{
+  const SetData = (data, title, placeholder) =>{
     SetqrContent(data)
     SetTitle(title)
+    SetPlaceholder(data)
   }
 
   
@@ -88,7 +91,7 @@ function App() {
   
 
   return (
-    <div className="App">
+    <div className="App" style={{minWidth:890}}>
       
       <div className='preview'>
       <h2>QRCode generator</h2>
@@ -122,14 +125,16 @@ function App() {
 
         <div className='qrContent'>
           <h3>QR Content</h3>
-          <button onClick={()=>SetData('https://www.youtube.com/watch?v=i71xHiYijMI','FOR LINK')}>Link</button>
-          <button onClick={()=>SetData('tel:8999445733','TO CONTACT')}>Phone</button>
-          <button onClick={()=>SetData('geo:0,0?q=20.024778,78.563709(Treasure)','FOR GPS L')}>GPS</button>
-          <button onClick={()=>SetData('WIFI:T:WPA;S:wizkumar;P:000000;H:;;','FOR WIFI')}>WIFI</button>
-          <button onClick={()=>SetData('SMSTO:7276101829:hello this is qr','FOR SMS')}>SMS</button>
-          <button onClick={()=>SetData('mailto:abc@xyz.com?body=its%20good&subject=this%20is%20qr','FOR EMAIL')}>Email</button>
-          <button onClick={()=>SetData("https://wa.me/7276101829?text=I'm%20interested%20in%20your%20car%20for%20sale",'FOR WHATSAAP')}>Whatsaap</button>
-          
+          <div className='buttons'>
+            <button onClick={()=>SetData('https://www.youtube.com/watch?v=i71xHiYijMI','FOR LINK')}>Link</button>
+            <button onClick={()=>SetData('tel:8999445733','TO CONTACT')}>Phone</button>
+            <button onClick={()=>SetData('geo:0,0?q=20.024778,78.563709(Treasure)','FOR GPS L')}>GPS</button>
+            <button onClick={()=>SetData('WIFI:T:WPA;S:wizkumar;P:000000;H:;;','FOR WIFI')}>WIFI</button>
+            <button onClick={()=>SetData('SMSTO:7276101829:hello this is qr','FOR SMS')}>SMS</button>
+            <button onClick={()=>SetData('mailto:abc@xyz.com?body=its%20good&subject=this%20is%20qr','FOR EMAIL')}>Email</button>
+            <button onClick={()=>SetData("https://wa.me/7276101829?text=I'm%20interested%20in%20your%20car%20for%20sale",'FOR WHATSAAP')}>Whatsaap</button>
+          </div>
+          <input className='inputText' type='text' placeholder={placeholder} />
          
         </div>
 
