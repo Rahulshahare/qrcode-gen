@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/qrcode-gen/static/css/main.74d4cb25.css",
+    "main.js": "/qrcode-gen/static/js/main.c1f9c078.js",
+    "static/js/453.2c381075.chunk.js": "/qrcode-gen/static/js/453.2c381075.chunk.js",
+    "static/media/bluegreen.png": "/qrcode-gen/static/media/bluegreen.567ddb566b4695db95f3.png",
+    "static/media/default.png": "/qrcode-gen/static/media/default.da552504c46c23111505.png",
+    "static/media/brown.png": "/qrcode-gen/static/media/brown.092804a6a689684fcb30.png",
+    "static/media/instagramLogo.svg": "/qrcode-gen/static/media/instagramLogo.354ba142173e34a79dddd0077dc99fbe.svg",
+    "static/media/whatsAppLogo.svg": "/qrcode-gen/static/media/whatsAppLogo.a6873f125bfdfc4732dd2d5ab0c33a0d.svg",
+    "static/media/youTubeLogo.svg": "/qrcode-gen/static/media/youTubeLogo.a0ebc6ae21367e807dfc0f40464a3c15.svg",
+    "static/media/telegramLogo.svg": "/qrcode-gen/static/media/telegramLogo.555ed4d0c8179e8f0c96e81666328458.svg",
+    "static/media/no-image-svgrepo-com.svg": "/qrcode-gen/static/media/no-image-svgrepo-com.ee103990b2f6a9c970f0dec66f362fef.svg",
+    "static/media/linkedInLogo.svg": "/qrcode-gen/static/media/linkedInLogo.9958ad96a30b8cffc474d50a4239b715.svg",
+    "index.html": "/qrcode-gen/index.html",
+    "static/media/black-rounded-square-shape-svgrepo-com.svg": "/qrcode-gen/static/media/black-rounded-square-shape-svgrepo-com.3efd1f56e38495c9aa034f89a4e76a47.svg",
+    "static/media/twitterLogo.svg": "/qrcode-gen/static/media/twitterLogo.8b2a9253fd183a78a01063abd669d40a.svg",
+    "static/media/faceBookLogo.svg": "/qrcode-gen/static/media/faceBookLogo.dbceffdc0ab32ad30200ce18d50f7bee.svg",
+    "static/media/square-svgrepo-com.svg": "/qrcode-gen/static/media/square-svgrepo-com.f49f1875aa6edda9bca898dd91ab3f3d.svg",
+    "static/media/circle-svgrepo-com.svg": "/qrcode-gen/static/media/circle-svgrepo-com.ac8a9f1bc63a91849cc1899eb358b307.svg",
+    "main.74d4cb25.css.map": "/qrcode-gen/static/css/main.74d4cb25.css.map",
+    "main.c1f9c078.js.map": "/qrcode-gen/static/js/main.c1f9c078.js.map",
+    "453.2c381075.chunk.js.map": "/qrcode-gen/static/js/453.2c381075.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.74d4cb25.css",
+    "static/js/main.c1f9c078.js"
+  ]
+}
