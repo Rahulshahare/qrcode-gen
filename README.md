@@ -38,6 +38,7 @@ Run these commands to get started locally:
 
 ## 📁 Project Structure
 
+.
 ├── public/
 ├── src/
 │ ├── App.js
